@@ -1,0 +1,71 @@
+CYLANCE
+Blackberry bought Cylance in early 2019, but didn't finish merging everything until late 2020
+Enterprise and Home  
+Enterprise  
+• Large Zero Trust Networking project
+• Cyber Suite Launched in October 2020, still too new for reviews.
+• They have a “SmartAV” which has been around for  awhile and is meh
+• Apparently a ton of false positives for the Cyber Suite
+• Per reddit is pretty much the only NGAV that works in air-gapped networks and fedramp approved
+• Seems the fancy user/continuous auth is still experimental..
+• People end up whitelisting directories of needed applications (firefox, adobe, etc) which could be a good place to hide
+• Processes run as “Cy*”
+ 
+
+
+
+
+
+
+Endpoint protection
+• Claims to not use a cloud connection, signatures, heuristics, or sandboxes
+• Standard AV claims (AWL, mass-storage device control, memory protectoin, script control) 
+• Classifies files into Safe, Abnormal, Unsafe 
+• File exclusions seem to be based on the SHA256 of the file or via signing certificate (only for powershell, activescript, office macros)
+• Installed in C:\Program Files\Cylance\Desktop
+• Exe: CylanceUI.exe, Service: CylancePROTECT
+• Default agent status information file written to C:\ProgramData\Cylance\Status\status.json/xml every minute
+
+
+EDR
+• Actually run on endpoint, doesn't need to stream data to central repo
+• Can perform Root Cause analysis and execute IR actions remotely, including locking down a device, logging everyone off, removing files, suspend/terminate process and/or process tree
+• Claims to be looking at everything (logon events, wmi events, dns, registry, process, threads, files)
+• Installed in C:\Program Files\Cylance\Optics\CyOptics.exe
+• Stores all events on each endpoint locally
+• Essentially hooks everything sysinternals does
+• Records and copies all files that have been downloaded and who downloaded them for the past 30 days
+
+
+
+Mobile
+• Meant to be run in conjuction with Blackberry UEM, which has an app store of approved apps
+• Detect sideloaded apps
+
+
+User and Entity Behavior Analytics
+• Adaptive risk scoring based on location, logon times, network usage, etc
+• Dynamic policy adoption can dynamically issue authentication challenges before granting access
+• Continuous Athentication including passive biometrics (keystroke timing, etc) and usage patterns (applications, data exfil, direction of traffic, location, time of day, etc)
+• Has to be installed separately. Runs as CyPersona
+
+Review:
+• “Instead of notifying users about the threats, Cylance quarantines dangerous files and automatically deletes them after one month. This hands-off approach is great for people who don’t want to spend time manually removing quarantined malware files.”
+
+• An emailed trojan got though the initital scan that was a .xlsm
+
+
+Article:
+"The Cylance engine is not an antivirus engine. Unlike AV, it doesn’t have a bias toward letting everything run. The technology doesn't assume a file is good until it’s evaluated. Our approach is to measure and decide on each and every file individually, and if it doesn't fit into our model of good, it leans towards bad."
+
+
+Virus Total
+• Cylance didn't detect linux merlin 4 months ago. It did detect a signed, packed, windows exe merlin 1 year ago
+• Windows dll not detected 1 year ago
+• Cylance detected base x64 windows exe, did not detect base x64 Windows dll
+• VT's version of cylance couldn't process the linux version
+
+
+
+
+
